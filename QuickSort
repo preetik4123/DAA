@@ -1,0 +1,136 @@
+#include <iostream>
+using namespace std;
+
+// Partition Function
+int partition(int arr[], int low, int high)
+{
+    // First element as pivot
+    int pivot = arr[low];
+
+    cout << "\n--------------------------------";
+    cout << "\nPivot Element = " << pivot << endl;
+
+    int i = low + 1;
+    int j = high;
+
+    while(true)
+    {
+        // Move from left until element > pivot
+        while(i <= high && arr[i] <= pivot)
+        {
+            cout << "Moving i : arr[" << i
+                 << "] = " << arr[i]
+                 << " <= " << pivot << endl;
+
+            i++;
+        }
+
+        // Move from right until element <= pivot
+        while(arr[j] > pivot)
+        {
+            cout << "Moving j : arr[" << j
+                 << "] = " << arr[j]
+                 << " > " << pivot << endl;
+
+            j--;
+        }
+
+        // If valid positions found
+        if(i < j)
+        {
+            cout << "Swapping "
+                 << arr[i]
+                 << " and "
+                 << arr[j]
+                 << endl;
+
+            swap(arr[i], arr[j]);
+
+            cout << "Array after swapping:\n";
+
+            for(int k = 0; k <= high; k++)
+                cout << arr[k] << " ";
+
+            cout << endl;
+        }
+
+        else
+        {
+            break;
+        }
+    }
+
+    // Place pivot at correct position
+    cout << "Swapping Pivot "
+         << arr[low]
+         << " and "
+         << arr[j]
+         << endl;
+
+    swap(arr[low], arr[j]);
+
+    cout << "Array after Pivot Placement:\n";
+
+    for(int k = 0; k <= high; k++)
+        cout << arr[k] << " ";
+
+    cout << endl;
+
+    return j;
+}
+
+// Quick Sort Function
+void quickSort(int arr[], int low, int high)
+{
+    if(low < high)
+    {
+        cout << "\n\nQuick Sort from Index "
+             << low
+             << " to "
+             << high
+             << endl;
+
+        int p = partition(arr, low, high);
+
+        cout << "Pivot positioned at index "
+             << p << endl;
+
+        // Left Subarray
+        quickSort(arr, low, p - 1);
+
+        // Right Subarray
+        quickSort(arr, p + 1, high);
+    }
+}
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int arr[100];
+
+    cout << "Enter array elements:\n";
+
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    cout << "\nOriginal Array:\n";
+
+    for(int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+
+    cout << endl;
+
+    // Quick Sort Call
+    quickSort(arr, 0, n - 1);
+
+    cout << "\n\nFinal Sorted Array:\n";
+
+    for(int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+
+    return 0;
+}
