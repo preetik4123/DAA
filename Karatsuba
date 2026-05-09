@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+long long karatsuba(long long X, long long Y)
+{
+    // Base case
+    if (X < 10 || Y < 10)
+        return X * Y;
+
+    int n = max(to_string(X).length(), to_string(Y).length());
+    int half = n / 2;
+
+    long long power = pow(10, half);
+
+    // Split numbers
+    long long XH = X / power;
+    long long XL = X % power;
+    long long YH = Y / power;
+    long long YL = Y % power;
+
+    // Step 1
+    long long S1 = karatsuba(XH, YH);
+
+    // Step 2
+    long long S2 = karatsuba(XL, YL);
+
+    // Step 3
+    long long S3 = karatsuba(XH + XL, YH + YL);
+
+    // Step 4
+    long long S4 = S3 - S2 - S1;
+
+    // Step 5 (final result)
+    return S1 * pow(10, 2 * half) + S4 * pow(10, half) + S2;
+}
+
+int main()
+{
+    long long X, Y;
+
+    cout << "Enter X: ";
+    cin >> X;
+
+    cout << "Enter Y: ";
+    cin >> Y;
+
+    cout << "Result = " << karatsuba(X, Y);
+
+    return 0;
+}
