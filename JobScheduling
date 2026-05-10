@@ -1,0 +1,163 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of jobs: ";
+    cin >> n;
+
+    char job[100];
+    int deadline[100];
+    int profit[100];
+
+    // Input
+    cout << "Enter Job Names:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> job[i];
+    }
+
+    cout << "Enter Deadlines:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> deadline[i];
+    }
+
+    cout << "Enter Profits:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> profit[i];
+    }
+
+    // Sorting according to profit
+    for(int i = 0; i < n - 1; i++)
+    {
+        for(int j = 0; j < n - i - 1; j++)
+        {
+            if(profit[j] < profit[j + 1])
+            {
+                // Swap Profit
+                int temp = profit[j];
+                profit[j] = profit[j + 1];
+                profit[j + 1] = temp;
+
+                // Swap Deadline
+                temp = deadline[j];
+                deadline[j] = deadline[j + 1];
+                deadline[j + 1] = temp;
+
+                // Swap Job
+                char t = job[j];
+                job[j] = job[j + 1];
+                job[j + 1] = t;
+            }
+        }
+    }
+
+    cout << "\nAfter Sorting by Profit:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cout << job[i]
+             << " Deadline = "
+             << deadline[i]
+             << " Profit = "
+             << profit[i]
+             << endl;
+    }
+
+    // Slot Array
+    int slot[100];
+
+    // Initialize empty slots
+    for(int i = 0; i < 100; i++)
+    {
+        slot[i] = -1;
+    }
+
+    int totalProfit = 0;
+
+    cout << "\nScheduling Jobs Step-by-Step:\n";
+
+    // Scheduling
+    for(int i = 0; i < n; i++)
+    {
+        cout << "\nTrying Job "
+             << job[i]
+             << endl;
+
+        // Check slots from right to left
+        for(int j = deadline[i] - 1; j >= 0; j--)
+        {
+            cout << "Checking Slot "
+                 << j
+                 << endl;
+
+            // If slot empty
+            if(slot[j] == -1)
+            {
+                cout << "Slot Empty" << endl;
+
+                slot[j] = i;
+
+                totalProfit += profit[i];
+
+                cout << "Job "
+                     << job[i]
+                     << " Assigned to Slot "
+                     << j
+                     << endl;
+
+                break;
+            }
+
+            else
+            {
+                cout << "Slot Already Filled"
+                     << endl;
+            }
+        }
+
+        // Print Current Slots
+        cout << "Current Slot Status:\n";
+
+        for(int k = 0; k < n; k++)
+        {
+            if(slot[k] != -1)
+            {
+                cout << "["
+                     << job[slot[k]]
+                     << "]";
+            }
+
+            else
+            {
+                cout << "[ ]";
+            }
+        }
+
+        cout << endl;
+    }
+
+    // Final Output
+    cout << "\nFinal Selected Jobs:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        if(slot[i] != -1)
+        {
+            cout << job[slot[i]]
+                 << " ";
+        }
+    }
+
+    cout << "\n\nTotal Profit = "
+         << totalProfit;
+
+    return 0;
+}
