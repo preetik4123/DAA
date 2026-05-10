@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of activities: ";
+    cin >> n;
+
+    int start[100], finish[100];
+
+    cout << "Enter Start Times:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> start[i];
+    }
+
+    cout << "Enter Finish Times:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> finish[i];
+    }
+
+    // Sort according to finish time
+    for(int i = 0; i < n - 1; i++)
+    {
+        for(int j = 0; j < n - i - 1; j++)
+        {
+            if(finish[j] > finish[j + 1])
+            {
+                // Swap finish times
+                int temp = finish[j];
+                finish[j] = finish[j + 1];
+                finish[j + 1] = temp;
+
+                // Swap start times
+                temp = start[j];
+                start[j] = start[j + 1];
+                start[j + 1] = temp;
+            }
+        }
+    }
+
+    cout << "\nSelected Activities:\n";
+
+    // First activity selected
+    int i = 0;
+
+    cout << "Activity 1 : ("
+         << start[i]
+         << ", "
+         << finish[i]
+         << ")" << endl;
+
+    // Check remaining activities
+    for(int j = 1; j < n; j++)
+    {
+        if(start[j] >= finish[i])
+        {
+            cout << "Activity "
+                 << j + 1
+                 << " : ("
+                 << start[j]
+                 << ", "
+                 << finish[j]
+                 << ")" << endl;
+
+            i = j;
+        }
+    }
+
+    return 0;
+}
