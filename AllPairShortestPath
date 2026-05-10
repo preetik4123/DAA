@@ -1,0 +1,144 @@
+#include <iostream>
+using namespace std;
+
+#define INF 9999
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of vertices: ";
+    cin >> n;
+
+    int dist[100][100];
+
+    cout << "Enter adjacency matrix:\n";
+    cout << "(Enter 9999 for INF)\n\n";
+
+    // Input Matrix
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            cin >> dist[i][j];
+        }
+    }
+
+    cout << "\nInitial Matrix:\n\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            if(dist[i][j] == INF)
+                cout << "INF\t";
+            else
+                cout << dist[i][j] << "\t";
+        }
+
+        cout << endl;
+    }
+
+    // Floyd Warshall
+    for(int k = 0; k < n; k++)
+    {
+        cout << "\n--------------------------------";
+        cout << "\nUsing Vertex "
+             << k
+             << " as Intermediate";
+        cout << "\n--------------------------------\n";
+
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                cout << "\nFormula:\n";
+
+                cout << "dist[" << i << "][" << j << "] = min("
+                     << dist[i][j]
+                     << ", ";
+
+                // Avoid INF addition
+                if(dist[i][k] == INF ||
+                   dist[k][j] == INF)
+                {
+                    cout << "INF";
+                }
+
+                else
+                {
+                    cout << dist[i][k]
+                         << " + "
+                         << dist[k][j];
+                }
+
+                cout << ")";
+
+                // Calculate new path
+                if(dist[i][k] != INF &&
+                   dist[k][j] != INF)
+                {
+                    int newDist =
+                        dist[i][k] + dist[k][j];
+
+                    cout << "\n= min("
+                         << dist[i][j]
+                         << ", "
+                         << newDist
+                         << ")";
+
+                    // Update minimum
+                    if(newDist < dist[i][j])
+                    {
+                        dist[i][j] = newDist;
+
+                        cout << "\nUpdated Value = "
+                             << dist[i][j];
+                    }
+
+                    else
+                    {
+                        cout << "\nNo Update Needed";
+                    }
+                }
+
+                cout << endl;
+            }
+        }
+
+        // Matrix after each k
+        cout << "\nMatrix after Vertex "
+             << k
+             << ":\n\n";
+
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(dist[i][j] == INF)
+                    cout << "INF\t";
+                else
+                    cout << dist[i][j] << "\t";
+            }
+
+            cout << endl;
+        }
+    }
+
+    cout << "\nFinal Shortest Path Matrix:\n\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        for(int j = 0; j < n; j++)
+        {
+            if(dist[i][j] == INF)
+                cout << "INF\t";
+            else
+                cout << dist[i][j] << "\t";
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}
