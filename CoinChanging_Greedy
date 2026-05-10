@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+
+    cout << "Enter the number of denominations to be entered: ";
+    cin >> n;
+
+    int coins[100];
+
+    cout << "Enter coin denominations in DESCENDING order:\n";
+
+    for(int i = 0; i < n; i++)
+    {
+        cin >> coins[i];
+    }
+
+    int amount;
+
+    cout << "Enter the amount to make: ";
+    cin >> amount;
+
+    int originalAmount = amount;
+
+    int count = 0;
+
+    cout << "\nCoins used:\n";
+
+    // Traverse all coins
+    for(int i = 0; i < n; i++)
+    {
+        // Use current coin while possible
+        while(amount >= coins[i])
+        {
+            cout << coins[i]
+                 << " -----> Remaining Amount = ";
+
+            amount = amount - coins[i];
+
+            cout << amount << endl;
+
+            count++;
+        }
+    }
+
+    // Check whether amount formed exactly
+    if(amount != 0)
+    {
+        cout << "\nAmount cannot be formed exactly "
+             << "using the given denominations."
+             << endl;
+
+        cout << "Remaining Amount = "
+             << amount << endl;
+    }
+
+    else
+    {
+        cout << "\nOriginal Amount = "
+             << originalAmount << endl;
+
+        cout << "Minimum Number of Coins = "
+             << count << endl;
+    }
+
+    return 0;
+}
