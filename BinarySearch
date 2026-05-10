@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    int arr[100];
+
+    cout << "Enter SORTED array elements:\n";
+
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    int key;
+
+    cout << "Enter element to search: ";
+    cin >> key;
+
+    int low = 0;
+    int high = n - 1;
+
+    int found = 0;
+
+    while(low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        cout << "\nLow = " << low
+             << " High = " << high
+             << " Mid = " << mid
+             << endl;
+
+        cout << "Checking arr[" << mid
+             << "] = " << arr[mid]
+             << endl;
+
+        // Element found
+        if(arr[mid] == key)
+        {
+            cout << "\nElement Found at Index "
+                 << mid << endl;
+
+            found = 1;
+
+            break;
+        }
+
+        // Search right half
+        else if(arr[mid] < key)
+        {
+            cout << key
+                 << " is greater than "
+                 << arr[mid]
+                 << endl;
+
+            cout << "Searching Right Half\n";
+
+            low = mid + 1;
+        }
+
+        // Search left half
+        else
+        {
+            cout << key
+                 << " is smaller than "
+                 << arr[mid]
+                 << endl;
+
+            cout << "Searching Left Half\n";
+
+            high = mid - 1;
+        }
+    }
+
+    if(found == 0)
+    {
+        cout << "\nElement Not Found";
+    }
+
+    return 0;
+}
